@@ -78,4 +78,21 @@ function displayForecastWeather(forecastWeatherData) {
       ${html}
     `;
   }
-  
+  // Define a function to save a city to localStorage
+function saveToLocalStorage(city) {
+    // Get the existing history list from localStorage
+    let history = localStorage.getItem('history');
+    // If no history list exists yet, create an empty array
+    if (!history) {
+      history = [];
+    } else {
+      history = JSON.parse(history);
+    }
+    // Add the new city to the history list
+    history.unshift(city);
+    // Limit the history list to 5 items
+    history = history.slice(0, 5);
+    // Save the updated history list back to localStorage
+    localStorage.setItem('history', JSON.stringify(history));
+    console.log(saveToLocalStorage);
+  }
