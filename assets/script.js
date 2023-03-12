@@ -31,7 +31,6 @@ function getWeatherData(city) {
             saveToLocalStorage(city);
             // Update the history list
             updateHistoryList();
-            console.log(getWeatherData);
           })
           .catch(error => console.error(error));
       })
@@ -55,6 +54,28 @@ function getWeatherData(city) {
     `;
     // Update the DOM with the HTML
     todaySection.innerHTML = html;
-    console.log(todayWeatherData.name);
+    
   }
 
+// Define a function to display weather data for the next 5 days
+function displayForecastWeather(forecastWeatherData) {
+    // Construct the HTML for the forecast section
+    const html = forecastWeatherData.map(data => {
+      // Format the date using Moment.js
+      const date = moment(data.dt_txt).format('dddd, MMMM Do YYYY');
+      return `
+        <div class="col-md-2">
+          <p>${date}</p>
+          <p>${data.weather[0].description}</p>
+          <p>Temperature: ${Math.round(data.main.temp - 273.15)} &deg;C</p>
+          <p>Humidity: ${data.main.humidity} %</p>
+        </div>
+      `;
+    }).join('');
+    // Update the DOM with the HTML
+    forecastSection.innerHTML = `
+      <div class="col-md-12"><h2>5-Day Forecast:</h2></div>
+      ${html}
+    `;
+  }
+  
