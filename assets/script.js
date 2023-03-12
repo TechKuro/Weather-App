@@ -31,10 +31,30 @@ function getWeatherData(city) {
             saveToLocalStorage(city);
             // Update the history list
             updateHistoryList();
+            console.log(getWeatherData);
           })
           .catch(error => console.error(error));
       })
       .catch(error => console.error(error));
   }
 
-  console.log(getWeatherData);
+
+
+
+  function displayTodayWeather(todayWeatherData) {
+    // Format the date and time using Moment.js
+    const date = moment(todayWeatherData.dt_txt).format('dddd, MMMM Do YYYY');
+    const time = moment(todayWeatherData.dt_txt).format('h:mm a');
+    // Construct the HTML for the today's weather section
+    const html = `
+      <h2>${todayWeatherData.name}</h2>
+      <p>${date} at ${time}</p>
+      <p>${todayWeatherData.weather[0].description}</p>
+      <p>Temperature: ${Math.round(todayWeatherData.main.temp - 273.15)} &deg;C</p>
+      <p>Humidity: ${todayWeatherData.main.humidity} %</p>
+    `;
+    // Update the DOM with the HTML
+    todaySection.innerHTML = html;
+    console.log(todayWeatherData.name);
+  }
+
